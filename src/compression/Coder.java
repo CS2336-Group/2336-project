@@ -1,3 +1,5 @@
+package compression;
+
 interface Coder
 {
     byte [] encode ( String message );
