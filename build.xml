@@ -1,0 +1,13 @@
+<project default="buildrun">
+	<presetdef name="javac">
+		<javac includeantruntime="false"/>
+	</presetdef>
+
+	<target name="buildrun" depends="build">
+	</target>
+
+	<target name="build">
+		<mkdir dir="target"/>
+		<javac srcdir="src" destdir="target"/>
+	</target>
+</project>
