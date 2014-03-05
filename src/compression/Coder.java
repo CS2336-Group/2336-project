@@ -2,6 +2,6 @@ package compression;
 
 interface Coder
 {
-    byte [] encode ( String message );
-    String decode ( byte [] codedMessage );
+    public byte [] encode ( String message );
+    public String decode ( byte [] codedMessage );
 }
