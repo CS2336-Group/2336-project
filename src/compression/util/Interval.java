@@ -1,3 +1,5 @@
+package compression.util;
+
 public class Interval
 {
     private int start;
