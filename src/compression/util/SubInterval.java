@@ -11,15 +11,15 @@ public class SubInterval
         this.length = length;
     }
 
-    public int start()
+    public double start()
     {
         return start;
     }
-    public int end()
+    public double end()
     {
         return start + length();
     }
-    public int length()
+    public double length()
     {
         return length;
     }
