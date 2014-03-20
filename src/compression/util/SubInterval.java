@@ -1,6 +1,6 @@
 package compression.util;
 
-class SubInterval
+public class SubInterval
 {
     private double start;
     private double length;
