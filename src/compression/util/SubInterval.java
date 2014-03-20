@@ -5,7 +5,7 @@ public class SubInterval
     private double start;
     private double length;
 
-    public SubInterval ( int start, int length )
+    public SubInterval ( double start, double length )
     {
         this.start = start;
         this.length = length;
