@@ -1,3 +1,5 @@
+package compression.util;
+
 class SubInterval
 {
     private double start;
