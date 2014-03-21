@@ -23,4 +23,10 @@ public class SubInterval
     {
         return length;
     }
+
+    public Interval subOf ( Interval interval )
+    {
+        return new Interval ( ( int ) Math.ceil ( ( interval.end() - interval.start() ) * start ) + interval.start(),
+                ( int ) Math.ceil ( interval.length() * length ) );
+    }
 }
