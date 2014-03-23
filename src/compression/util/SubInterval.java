@@ -29,4 +29,10 @@ public class SubInterval
         return new Interval ( ( int ) Math.ceil ( ( interval.end() - interval.start() ) * start ) + interval.start(),
                 ( int ) Math.ceil ( interval.length() * length ) );
     }
+
+    @Override
+    public String toString()
+    {
+        return "|" + start + ", " + length + ">";
+    }
 }

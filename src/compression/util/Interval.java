@@ -23,4 +23,10 @@ public class Interval
     {
         return length;
     }
+
+    @Override
+    public String toString()
+    {
+        return "|" + start + ", " + length + ">";
+    }
 }
