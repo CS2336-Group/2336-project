@@ -2,24 +2,24 @@ package compression.util;
 
 public class Interval
 {
-    private int start;
-    private int length;
+    private long start;
+    private long length;
 
-    public Interval ( int start, int length )
+    public Interval ( long start, long length )
     {
         this.start = start;
         this.length = length;
     }
 
-    public int start()
+    public long start()
     {
         return start;
     }
-    public int end()
+    public long end()
     {
         return start + length;
     }
-    public int length()
+    public long length()
     {
         return length;
     }
