@@ -8,6 +8,6 @@
 
 	<target name="build">
 		<mkdir dir="target"/>
-		<javac srcdir="src" destdir="target"/>
+		<javac srcdir="src" destdir="target" debug="true"/>
 	</target>
 </project>
