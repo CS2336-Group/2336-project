@@ -9,7 +9,7 @@ public class BWTransformation{
 	public BWTransform(String originalString){
 		rotatingString = originalString;
 		stringArraySize = originalString.length();
-		rotationsOfString = new String[stringArraySize];
+		rotationsOfText = new String[stringArraySize];
 	}
 
 	public String encode(){
@@ -17,23 +17,23 @@ public class BWTransformation{
 		sortRotations();
 		compressString();
 
-		return compressedString;
+		return (compressedString+"|");
 	}
 	
 	private void textRotations(){
-		for(i = 0; i < originalString.length(); i++){
+		for(i = 0; i < (originalString.length); i++){
 			rotatingString = rotatingString.charAt(stringArraySize -1) + rotatingString.substring(0, stringArraySize - 2);
-			rotationsOfString[i] = rotatingString;
+			rotationsOfText[i] = rotatingString;
 		}
 	}
 	
 	private void sortRotations(){
-		rotationsOfText.sort();
+		Arrays.sort(rotationsOfText);
 	}
 
 	private void compressString(){
-		for(int j = 0; j < rotationsOfStrings.length()-1; j++){
-			compressedString += rotationsOfStrings[j].charAt(stringArraySize);
+		for(int j = 0; j < (rotationsOfText.length)-1; j++){
+			compressedString += rotationsOfText[j].charAt(stringArraySize);
 		}
 	}
 
