@@ -9,9 +9,24 @@ class ArithmeticCoder implements Coder
     @Override
     public byte [] encode ( String message )
     {
-        BigInteger lowValue = new BigInteger ( "1" );
-        BigInteger highValue = new BigInteger ( "0" );
+        BigInteger lowValue = BigInteger.valueOf ( 0 );
+        BigInteger highValue = BigInteger.valueOf ( 0 );
+        BigInteger length = BigInteger.valueOf ( message.length() );
+        BigInteger totalProduct = BigInteger.valueOf ( 1 );
         CharMap key = makeKey ( message );
+
+        for ( Character c : message.toCharArray() )
+        {
+            lowValue = lowValue.add (
+                totalProduct.multiply (
+                    BigInteger.valueOf ( key.get ( c ) )
+                )
+            );
+            lowValue = lowValue.multiply ( length );
+            totalProduct = totalProduct.multiply (
+                BigInteger.valueOf ( key.getPosition ( c ) )
+            );
+        }
 
         return new byte[1];
     }
