@@ -37,6 +37,11 @@ public class CharMap extends HashMap<Character, Long>
     @Override
     public Long get ( Object c )
     {
+        return getPosition ( c );
+    }
+
+    public Long getPosition ( Object c )
+    {
         long sum = 0;
         if ( !containsKey ( c ) )
         {
@@ -52,6 +57,15 @@ public class CharMap extends HashMap<Character, Long>
             }
         }
         return Long.valueOf ( sum );
+    }
+
+    public Long getProbability ( Object c )
+    {
+        if ( !containsKey ( c ) )
+        {
+            return null;
+        }
+        return super.get ( c );
     }
 
     @Override
@@ -78,7 +92,7 @@ public class CharMap extends HashMap<Character, Long>
                     }
                 }
             );
-        sotrtedEntries.addAll ( this );
+        sortedEntries.addAll ( this.entrySet() );
         return sortedEntries;
     }
 }
