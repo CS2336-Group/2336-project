@@ -1,11 +1,14 @@
 package compression;
 
+import java.math.BigInteger;
+
 class ArithmeticCoder implements Coder
 {
     @Override
     public byte [] encode ( String message )
     {
-        // Do nothing
+        BigInteger lowValue = new BigInteger ( "1" );
+        BigInteger highValue = new BigInteger ( "0" );
         return new byte[1];
     }
 
