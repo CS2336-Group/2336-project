@@ -74,7 +74,7 @@ public class CharMap extends HashMap<Character, Long>
                     public int compare ( Map.Entry<Character, Long> e1,
                                          Map.Entry<Character, Long> e2 )
                     {
-                        return e1.getValue().compareTo ( e2.getValue() );
+                        return e2.getValue().compareTo ( e1.getValue() );
                     }
                 }
             );
