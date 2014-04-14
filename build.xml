@@ -10,4 +10,8 @@
 		<mkdir dir="target"/>
 		<javac srcdir="src" destdir="target" debug="true"/>
 	</target>
+
+	<target name="clean">
+		<delete dir="target"/>
+	</target>
 </project>
