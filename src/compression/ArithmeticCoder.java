@@ -29,6 +29,8 @@ class ArithmeticCoder implements Coder
         }
         lowValue = lowValue.divide ( length );
 
+        highValue = lowValue.add ( totalProduct );
+
         return new byte[1];
     }
 
