@@ -92,7 +92,7 @@ public class CharMap extends HashMap<Character, Long>
                     }
                 }
             );
-        sortedEntries.addAll ( this.entrySet() );
+        sortedEntries.addAll ( super.entrySet() );
         return sortedEntries;
     }
 }
