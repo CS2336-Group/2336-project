@@ -27,6 +27,7 @@ class ArithmeticCoder implements Coder
                 BigInteger.valueOf ( key.getProbability ( c ) )
             );
         }
+        lowValue = lowValue.divide ( length );
 
         return new byte[1];
     }
