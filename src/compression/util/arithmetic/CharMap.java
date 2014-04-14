@@ -50,11 +50,11 @@ public class CharMap extends HashMap<Character, Long>
 
         for ( Map.Entry<Character, Long> e : entrySet() )
         {
-            sum += e.getValue();
             if ( c == e.getKey() )
             {
                 break;
             }
+            sum += e.getValue();
         }
         return Long.valueOf ( sum );
     }

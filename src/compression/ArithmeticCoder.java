@@ -24,7 +24,7 @@ class ArithmeticCoder implements Coder
             );
             lowValue = lowValue.multiply ( length );
             totalProduct = totalProduct.multiply (
-                BigInteger.valueOf ( key.getPosition ( c ) )
+                BigInteger.valueOf ( key.getProbability ( c ) )
             );
         }
 
