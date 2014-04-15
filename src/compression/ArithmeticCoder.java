@@ -3,6 +3,8 @@ package compression;
 import java.math.BigInteger;
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
+import java.io.ByteArrayInputStream;
+import java.io.DataInputStream;
 import java.util.Map;
 
 import compression.util.arithmetic.CharMap;
