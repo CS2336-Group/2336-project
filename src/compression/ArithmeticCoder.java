@@ -2,7 +2,7 @@ package compression;
 
 import java.math.BigInteger;
 import java.io.ByteArrayOutputStream;
-import java.io.ObjectOutputStream;
+import java.io.DataOutputStream;
 
 import compression.util.arithmetic.CharMap;
 
@@ -34,9 +34,10 @@ class ArithmeticCoder implements Coder
         highValue = lowValue.add ( totalProduct );
 
         ByteArrayOutputStream outputBytes = new ByteArrayOutputStream();
+        DataOutputStream output = new DataOutputStream ( outputBytes );
         try
         {
-            outputBytes.write ( lowValue.toByteArray() );
+            output.write ( lowValue.toByteArray() );
         } catch ( java.io.IOException e )
         {
             System.err.println ( "There was an IOException." );
