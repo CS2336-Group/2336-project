@@ -58,7 +58,24 @@ class ArithmeticCoder implements Coder
     @Override
     public String decode ( byte [] codedMessage )
     {
-        // Do nothing
+        ByteArrayInputStream inputBytes = new ByteArrayInputStream (
+            codedMessage
+        );
+        DataInputStream input = new DataInputStream ( inputBytes );
+
+        CharMap key = new CharMap();
+
+        try
+        {
+            int keyLength = input.readInt();
+            for ( int i = 0; i < keyLength; ++i )
+            {
+                key.put ( input.readChar(), input.readInt() );
+            }
+        } catch ( java.io.IOException e )
+        {
+            System.err.println ( "There was an IOException" );
+        }
         return "";
     }
 
