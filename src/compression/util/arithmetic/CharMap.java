@@ -10,7 +10,7 @@ import java.util.TreeSet;
 /**
  * Stores the probability of each character of the message.
  */
-public class CharMap extends HashMap<Character, Long>
+public class CharMap extends HashMap<Character, Long> implements java.io.Serializable
 {
     public CharMap()
     {
