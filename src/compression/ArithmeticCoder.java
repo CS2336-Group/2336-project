@@ -64,6 +64,7 @@ class ArithmeticCoder implements Coder
         DataInputStream input = new DataInputStream ( inputBytes );
 
         BigInteger code;
+        BigInteger power;
         CharMap key = new CharMap();
 
         try
@@ -81,6 +82,15 @@ class ArithmeticCoder implements Coder
         {
             System.err.println ( "There was an IOException" );
         }
+
+        int messageLength = 0;
+        for ( Integer j : key.values() )
+        {
+            messageLength += j;
+        }
+
+        power = BigInteger.valueOf ( messageLength ).pow ( messageLength - 1 );
+
         return "";
     }
 
