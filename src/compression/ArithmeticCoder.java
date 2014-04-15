@@ -63,6 +63,7 @@ class ArithmeticCoder implements Coder
         );
         DataInputStream input = new DataInputStream ( inputBytes );
 
+        BigInteger code;
         CharMap key = new CharMap();
 
         try
@@ -72,6 +73,10 @@ class ArithmeticCoder implements Coder
             {
                 key.put ( input.readChar(), input.readInt() );
             }
+
+            byte[] valueStorage = new byte[ inputBytes.available() ];
+            input.readFully ( valueStorage );
+            code = new BigInteger ( valueStorage );
         } catch ( java.io.IOException e )
         {
             System.err.println ( "There was an IOException" );
