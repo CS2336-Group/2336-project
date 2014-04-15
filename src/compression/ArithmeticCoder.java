@@ -3,6 +3,7 @@ package compression;
 import java.math.BigInteger;
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
+import java.util.Map;
 
 import compression.util.arithmetic.CharMap;
 
@@ -37,6 +38,12 @@ class ArithmeticCoder implements Coder
         DataOutputStream output = new DataOutputStream ( outputBytes );
         try
         {
+            output.writeInt ( key.size() );
+            for ( Map.Entry<Character, Integer> e : key.entrySet() )
+            {
+                output.writeChar ( e.getKey() );
+                output.writeInt ( e.getValue() );
+            }
             output.write ( lowValue.toByteArray() );
         } catch ( java.io.IOException e )
         {
