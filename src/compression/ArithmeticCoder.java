@@ -50,6 +50,7 @@ class ArithmeticCoder implements Coder
         } catch ( java.io.IOException e )
         {
             System.err.println ( "There was an IOException." );
+            return null;
         }
 
         return outputBytes.toByteArray();
@@ -81,6 +82,7 @@ class ArithmeticCoder implements Coder
         } catch ( java.io.IOException e )
         {
             System.err.println ( "There was an IOException" );
+            return null;
         }
 
         int messageLength = 0;
