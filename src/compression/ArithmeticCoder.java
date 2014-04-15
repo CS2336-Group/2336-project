@@ -36,13 +36,7 @@ class ArithmeticCoder implements Coder
         ByteArrayOutputStream outputBytes = new ByteArrayOutputStream();
         try
         {
-            ObjectOutputStream output = new ObjectOutputStream (
-                new ByteArrayOutputStream()
-            );
-
-            output.writeObject ( key );
-            output.writeInt ( length.intValue() );
-            output.write ( lowValue.toByteArray() );
+            outputBytes.write ( lowValue.toByteArray() );
         } catch ( java.io.IOException e )
         {
             System.err.println ( "There was an IOException." );
