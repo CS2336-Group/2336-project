@@ -10,7 +10,7 @@ import java.util.TreeSet;
 /**
  * Stores the probability of each character of the message.
  */
-public class CharMap extends HashMap<Character, Long> implements java.io.Serializable
+public class CharMap extends HashMap<Character, Integer> implements java.io.Serializable
 {
     public CharMap()
     {
@@ -20,14 +20,14 @@ public class CharMap extends HashMap<Character, Long> implements java.io.Seriali
     /**
      * Adds one to the probability of seeing the character.
      */
-    public Long addTo ( Character c )
+    public Integer addTo ( Character c )
     {
         if ( containsKey ( c ) )
         {
             return put ( c, super.get ( c ) + 1 );
         } else
         {
-            return put ( c, 1L );
+            return put ( c, 1 );
         }
     }
 
@@ -35,20 +35,20 @@ public class CharMap extends HashMap<Character, Long> implements java.io.Seriali
      * Get the character's probability shifted for the accumulated probability.
      */
     @Override
-    public Long get ( Object c )
+    public Integer get ( Object c )
     {
         return getPosition ( c );
     }
 
-    public Long getPosition ( Object c )
+    public Integer getPosition ( Object c )
     {
-        long sum = 0;
+        int sum = 0;
         if ( !containsKey ( c ) )
         {
             return null;
         }
 
-        for ( Map.Entry<Character, Long> e : entrySet() )
+        for ( Map.Entry<Character, Integer> e : entrySet() )
         {
             if ( c == e.getKey() )
             {
@@ -56,10 +56,10 @@ public class CharMap extends HashMap<Character, Long> implements java.io.Seriali
             }
             sum += e.getValue();
         }
-        return Long.valueOf ( sum );
+        return Integer.valueOf ( sum );
     }
 
-    public Long getProbability ( Object c )
+    public Integer getProbability ( Object c )
     {
         if ( !containsKey ( c ) )
         {
@@ -69,7 +69,7 @@ public class CharMap extends HashMap<Character, Long> implements java.io.Seriali
     }
 
     @Override
-    public Set<Map.Entry<Character, Long>> entrySet()
+    public Set<Map.Entry<Character, Integer>> entrySet()
     {
         return entriesSortedByValue();
     }
@@ -77,16 +77,16 @@ public class CharMap extends HashMap<Character, Long> implements java.io.Seriali
     /**
      * Sorts the entries by value as opposed to key.
      */
-    private SortedSet<Map.Entry<Character, Long>> entriesSortedByValue()
+    private SortedSet<Map.Entry<Character, Integer>> entriesSortedByValue()
     {
-        SortedSet<Map.Entry<Character, Long>> sortedEntries =
-            new TreeSet<Map.Entry<Character, Long>>
+        SortedSet<Map.Entry<Character, Integer>> sortedEntries =
+            new TreeSet<Map.Entry<Character, Integer>>
             (
-                new Comparator<Map.Entry<Character, Long>>()
+                new Comparator<Map.Entry<Character, Integer>>()
                 {
                     @Override
-                    public int compare ( Map.Entry<Character, Long> e1,
-                                         Map.Entry<Character, Long> e2 )
+                    public int compare ( Map.Entry<Character, Integer> e1,
+                                         Map.Entry<Character, Integer> e2 )
                     {
                         return e2.getValue().compareTo ( e1.getValue() );
                     }
