@@ -88,7 +88,7 @@ public class CharMap extends HashMap<Character, Integer> implements java.io.Seri
                     public int compare ( Map.Entry<Character, Integer> e1,
                                          Map.Entry<Character, Integer> e2 )
                     {
-                        return e2.getValue().compareTo ( e1.getValue() );
+                        return e1.getValue().compareTo ( e2.getValue() );
                     }
                 }
             );
