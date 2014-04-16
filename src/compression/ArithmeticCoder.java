@@ -136,7 +136,7 @@ class ArithmeticCoder implements Coder
             message += c;
         }
 
-        return "";
+        return message;
     }
 
     CharMap makeKey ( String message )
