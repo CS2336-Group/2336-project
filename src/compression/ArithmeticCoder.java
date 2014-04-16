@@ -6,6 +6,7 @@ import java.io.DataOutputStream;
 import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
 import java.util.Map;
+import java.util.TreeMap;
 
 import compression.util.arithmetic.CharMap;
 
@@ -67,6 +68,7 @@ class ArithmeticCoder implements Coder
         BigInteger code;
         BigInteger power;
         CharMap key = new CharMap();
+        TreeMap<Integer, Character> reverseKey = new TreeMap<Integer, Character>();
 
         try
         {
@@ -83,6 +85,11 @@ class ArithmeticCoder implements Coder
         {
             System.err.println ( "There was an IOException" );
             return null;
+        }
+
+        for ( Character c : key.keySet() )
+        {
+            reverseKey.put ( key.getPosition ( c ), c );
         }
 
         int messageLength = 0;
