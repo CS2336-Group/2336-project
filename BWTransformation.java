@@ -7,7 +7,7 @@ public class BWTransformation{
 	private int stringArraySize;
 
 	public BWTransform(String originalString){
-		rotatingString = originalString;
+		rotatingString = originalString+"|";
 		stringArraySize = originalString.length();
 		rotationsOfText = new String[stringArraySize];
 	}
@@ -17,7 +17,7 @@ public class BWTransformation{
 		sortRotations();
 		compressString();
 
-		return (compressedString+"|");
+		return compressedString;
 	}
 	
 	private void textRotations(){
@@ -37,6 +37,27 @@ public class BWTransformation{
 		}
 	}
 
-	public String decode(){
+	public String decode(String compressedFileString){
+		String[] compressedFileStringArray;
+		String[] tempSortingArray;
+		int stringIndex = 0;
+
+		for(int i = 0; i < compressedFileString.length(); i++){
+			compressedFileStringArray[i] = compressedFileString.charAt(i);
+		}
+
+		for(int j = 0; j < compressedFileString.length(); j++){
+			tempSortingArray = compressedFileStringArray;
+			Arrays.sort(tempSortingArray);
+			for(int k = 0; k < compressedFileString.length(); k++){
+				compressedFileStringArray[k] = compressedFileStringArray[k] + tempSortingArray.charAt(stringArraySize-1);
+			}
+		}
 		
+		while(compressedFileStringArray[stringIndex].charAt(stringArraySize - 1) != '|'){
+			stringIndex++;
+		}
+		
+		return compressedFileStringArray[stringIndex];
+	}
 }
