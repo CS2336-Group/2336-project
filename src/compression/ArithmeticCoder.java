@@ -60,6 +60,8 @@ class ArithmeticCoder implements Coder
     @Override
     public String decode ( byte [] codedMessage )
     {
+        String message = "";
+
         ByteArrayInputStream inputBytes = new ByteArrayInputStream (
             codedMessage
         );
@@ -99,6 +101,40 @@ class ArithmeticCoder implements Coder
         }
 
         power = BigInteger.valueOf ( messageLength ).pow ( messageLength - 1 );
+
+        for ( ;
+              power.compareTo ( BigInteger.ZERO ) > 0;
+              power = power.divide ( BigInteger.valueOf ( messageLength ) ) )
+        {
+            char c = ' ';
+            int codedChar = ( code.divide ( power ) ).intValue();
+
+            char lastChar = reverseKey.lastEntry().getValue();
+            c = lastChar;
+            for ( Map.Entry<Integer, Character> e : reverseKey.entrySet() )
+            {
+                if ( codedChar < e.getKey() )
+                {
+                    c = lastChar;
+                    break;
+                } else if ( codedChar == e.getKey() )
+                {
+                    c = e.getValue();
+                    break;
+                }
+                lastChar = e.getValue();
+            }
+
+            code = ( code.subtract (
+                power.multiply ( BigInteger.valueOf ( key.getPosition ( c ) ) )
+            ) ).divide (
+                BigInteger.valueOf (
+                    key.getProbability ( c )
+                )
+            );
+
+            message += c;
+        }
 
         return "";
     }
