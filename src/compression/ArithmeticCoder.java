@@ -15,6 +15,9 @@ class ArithmeticCoder implements Coder
     @Override
     public byte [] encode ( String message )
     {
+        // Remove invalid UTF-8 symbols
+        message = message.replace ( Character.toString ( ( char ) 0xFFFD ), "" );
+
         BigInteger lowValue = BigInteger.valueOf ( 0 );
         BigInteger highValue = BigInteger.valueOf ( 0 );
         BigInteger length = BigInteger.valueOf ( message.length() );
