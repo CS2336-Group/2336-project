@@ -47,6 +47,7 @@ class ArithmeticCoder implements Coder
 
         // Create a value for the final encoding
         BigInteger value = lowValue;
+        value = maxZeroes ( value, highValue );
 
         // Output the resulting number.
         ByteArrayOutputStream outputBytes = new ByteArrayOutputStream();
@@ -67,6 +68,25 @@ class ArithmeticCoder implements Coder
         }
 
         return outputBytes.toByteArray();
+    }
+
+    private BigInteger maxZeroes ( BigInteger value, BigInteger highValue )
+    {
+        int i = value.getLowestSetBit();
+        do
+        {
+            BigInteger testVal = ( BigInteger.valueOf ( 2 ).pow ( i ) );
+            BigInteger sum = value;
+            sum = value.add ( testVal );
+            if ( sum.compareTo ( highValue ) < 0 )
+            {
+                value = sum;
+            } else
+            {
+                break;
+            }
+        } while ( i < ( i = value.getLowestSetBit() ) );
+        return value;
     }
 
     @Override
