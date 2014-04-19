@@ -75,20 +75,20 @@ class ArithmeticCoder implements Coder
 
     private BigInteger maxZeroes ( BigInteger value, BigInteger highValue )
     {
-        int i = value.getLowestSetBit();
-        do
+        int i = highValue.subtract ( value ).bitLength();
+        int j;
+        while ( --i >= 0 )
         {
-            BigInteger testVal = ( BigInteger.valueOf ( 2 ).pow ( i ) );
-            BigInteger sum = value;
-            sum = value.add ( testVal );
-            if ( sum.compareTo ( highValue ) < 0 )
+            if ( !value.testBit ( i ) )
             {
-                value = sum;
-            } else
-            {
+                value = value.setBit ( i );
+                while ( ( j = value.getLowestSetBit() ) < i )
+                {
+                    value = value.clearBit ( j );
+                }
                 break;
             }
-        } while ( i < ( i = value.getLowestSetBit() ) );
+        }
         return value;
     }
 
