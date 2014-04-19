@@ -45,6 +45,9 @@ class ArithmeticCoder implements Coder
         // Calculate the highValue based on the lowValue.
         highValue = lowValue.add ( totalProduct );
 
+        // Create a value for the final encoding
+        BigInteger value = lowValue;
+
         // Output the resulting number.
         ByteArrayOutputStream outputBytes = new ByteArrayOutputStream();
         DataOutputStream output = new DataOutputStream ( outputBytes );
@@ -56,7 +59,7 @@ class ArithmeticCoder implements Coder
                 output.writeChar ( e.getKey() );
                 output.writeInt ( e.getValue() );
             }
-            output.write ( lowValue.toByteArray() );
+            output.write ( value.toByteArray() );
         } catch ( java.io.IOException e )
         {
             System.err.println ( "There was an IOException." );
