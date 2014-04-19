@@ -15,15 +15,19 @@ class ArithmeticCoder implements Coder
     @Override
     public byte [] encode ( String message )
     {
-        // Remove invalid UTF-8 symbols
+        // Remove invalid UTF-8 symbols.
         message = message.replace ( Character.toString ( ( char ) 0xFFFD ), "" );
 
+        // Set up encoding process.
         BigInteger lowValue = BigInteger.valueOf ( 0 );
         BigInteger highValue = BigInteger.valueOf ( 0 );
         BigInteger length = BigInteger.valueOf ( message.length() );
         BigInteger totalProduct = BigInteger.valueOf ( 1 );
+
+        // Make the key based on the current string.
         CharMap key = makeKey ( message );
 
+        // Calculate the lowValue (the lowest possible encoding).
         for ( Character c : message.toCharArray() )
         {
             lowValue = lowValue.add (
@@ -38,8 +42,10 @@ class ArithmeticCoder implements Coder
         }
         lowValue = lowValue.divide ( length );
 
+        // Calculate the highValue based on the lowValue.
         highValue = lowValue.add ( totalProduct );
 
+        // Output the resulting number.
         ByteArrayOutputStream outputBytes = new ByteArrayOutputStream();
         DataOutputStream output = new DataOutputStream ( outputBytes );
         try
