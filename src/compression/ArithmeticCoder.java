@@ -48,6 +48,8 @@ class ArithmeticCoder implements Coder
         // Create a value for the final encoding
         BigInteger value = lowValue;
         value = maxZeroes ( value, highValue );
+        int zeroes = value.getLowestSetBit();
+        value = value.shiftRight ( zeroes );
 
         // Output the resulting number.
         ByteArrayOutputStream outputBytes = new ByteArrayOutputStream();
@@ -55,6 +57,7 @@ class ArithmeticCoder implements Coder
         try
         {
             output.writeInt ( key.size() );
+            output.writeInt ( zeroes );
             for ( Map.Entry<Character, Integer> e : key.entrySet() )
             {
                 output.writeChar ( e.getKey() );
@@ -99,6 +102,8 @@ class ArithmeticCoder implements Coder
         );
         DataInputStream input = new DataInputStream ( inputBytes );
 
+        int zeroes = 0;
+
         BigInteger code;
         BigInteger power;
         CharMap key = new CharMap();
@@ -107,6 +112,7 @@ class ArithmeticCoder implements Coder
         try
         {
             int keyLength = input.readInt();
+            zeroes = input.readInt();
             for ( int i = 0; i < keyLength; ++i )
             {
                 key.put ( input.readChar(), input.readInt() );
@@ -120,6 +126,8 @@ class ArithmeticCoder implements Coder
             System.err.println ( "There was an IOException" );
             return null;
         }
+
+        code = code.shiftLeft ( zeroes );
 
         for ( Character c : key.keySet() )
         {
