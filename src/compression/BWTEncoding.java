@@ -1,3 +1,5 @@
+package compression;
+
 import java.util.Arrays;
 
 public class BWTEncoding{

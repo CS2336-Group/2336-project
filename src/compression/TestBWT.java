@@ -1,3 +1,5 @@
+package compression;
+
 public class TestBWT{
 	public static void main(String[] args){
 		BWTEncoding str1 = new BWTEncoding("banana");
