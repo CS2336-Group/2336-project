@@ -3,15 +3,17 @@ package compression.gui;
 import java.util.HashMap;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.*;
 
 import compression.*;
+import compression.util.FileReader;
 
 public class MainWindow extends JFrame
 {
     JPanel panel;
-    JPanel filePanel;
-    JPanel compressionPanel;
-    JPanel buttonPanel;
+    FilePanel filePanel;
+    CompressionPanel compressionPanel;
+    ButtonPanel buttonPanel;
 
     public MainWindow()
     {
@@ -50,6 +52,11 @@ public class MainWindow extends JFrame
             add ( filenameField );
             add ( Box.createHorizontalGlue() );
         }
+
+        public String getFilename()
+        {
+            return filenameField.getText();
+        }
     }
     private class CompressionPanel extends JPanel
     {
@@ -78,6 +85,15 @@ public class MainWindow extends JFrame
             add ( compressionBox );
             add ( Box.createVerticalGlue() );
         }
+
+        public Coder getCoder()
+        {
+            return compressionMap.get ( compressionBox.getSelectedItem() );
+        }
+        public String getCoderName()
+        {
+            return compressionBox.getSelectedItem().toString();
+        }
     }
     private class ButtonPanel extends JPanel
     {
@@ -96,6 +112,65 @@ public class MainWindow extends JFrame
             add ( Box.createHorizontalGlue() );
             add ( quitButton );
             add ( Box.createHorizontalGlue() );
+        }
+    }
+
+    private class CompressionPress implements ActionListener
+    {
+        @Override
+        public void actionPerformed ( ActionEvent e )
+        {
+            Coder coder = compressionPanel.getCoder();
+            String coderName = compressionPanel.getCoderName();
+            String filename = filePanel.getFilename();
+            Component frame = ( Component ) e.getSource();
+
+            Object[] options = { "Compress", "Decompress" };
+            int choice = JOptionPane.showOptionDialog (
+                frame,
+                "What do you want to do?",
+                "Compress or Decompress?",
+                JOptionPane.PLAIN_MESSAGE,
+                JOptionPane.DEFAULT_OPTION,
+                null,
+                options,
+                options[ 0 ]
+            );
+
+            if ( options[ choice ] == "Compress" )
+            {
+                String message = FileReader.readFile ( filename );
+
+                if ( message == null )
+                {
+                    JOptionPane.showMessageDialog ( frame,
+                        "There is no such file."
+                    );
+                    return;
+                } else if ( message == "" )
+                {
+                    JOptionPane.showMessageDialog ( frame,
+                        "The file is empty."
+                    );
+                    return;
+                }
+
+                byte[] output = coder.encode ( message );
+            } else
+            {
+                byte[] codedMessage = FileReader.readBinary ( filename );
+
+                if ( codedMessage == null )
+                {
+                    JOptionPane.showMessageDialog ( frame,
+                        "The file does not exist or is empty."
+                    );
+                    return;
+                }
+
+                String outputString = coder.decode ( codedMessage );
+                byte[] output = outputString.getBytes();
+            }
         }
     }
 }
