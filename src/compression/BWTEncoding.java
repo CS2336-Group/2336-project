@@ -5,7 +5,7 @@ import java.util.Arrays;
 public class BWTEncoding{
 	private String[] rotationsOfText;
 	public String rotatingString;
-	private String compressedString;
+	private String compressedString = "";
 	public int stringArraySize;
 
 	public BWTEncoding(String originalString){
@@ -24,7 +24,7 @@ public class BWTEncoding{
 	
 	private void textRotations(){
 		for(int i = 0; i < stringArraySize; i++){
-			rotatingString = rotatingString.charAt(stringArraySize - 1) + rotatingString.substring(0, stringArraySize - 2);
+			rotatingString = rotatingString.charAt(stringArraySize - 1) + rotatingString.substring(0, stringArraySize - 1);
 			rotationsOfText[i] = rotatingString;
 		}
 	}
@@ -35,7 +35,9 @@ public class BWTEncoding{
 
 	private void compressString(){
 		for(int j = 0; j < (rotationsOfText.length)-1; j++){
-			compressedString += rotationsOfText[j].charAt(stringArraySize);
+            System.out.println ( "Starting iteration " + j );
+			compressedString += rotationsOfText[j].charAt(stringArraySize - 1);
+            System.out.println ( "Ending iteration " + j );
 		}
 	}
 }
