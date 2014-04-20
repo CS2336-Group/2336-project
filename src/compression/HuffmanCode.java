@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.PriorityQueue;
 
 
-public class HuffmanCode implements Coder {
+public class HuffmanCode {
 	public static PriorityQueue<Node> q;
     public static HashMap<Character, String> toCode;
     public static HashMap<String, Character> toChar;
@@ -139,9 +139,11 @@ public class HuffmanCode implements Coder {
 	 * **/
 	public String decode(byte[] codedMessage) {
 		
-		 String decompressed = decompress(compressed.getBytes());
-	       System.out.println("The original text used a total of " + decompressed.length() + " characters");
-	       System.out.println(decompressed);
+        String decompressed = "";
+        decompressed = decompress(new String(codedMessage));
+
+        System.out.println("The original text used a total of " + decompressed.length() + " characters");
+        System.out.println(decompressed);
 		return decompressed;
 	}
  
