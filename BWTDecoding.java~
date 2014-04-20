@@ -5,24 +5,22 @@ public class BWTDecoding{
 	private String[] compressedFileStringArray;
 	private String[] tempSortingArray;
 	private int stringIndex;
-	private String compressedString;
 	
 	public BWTDecoding(String compressedFileString){
 		stringArraySize = compressedFileString.length();
 		compressedFileStringArray = new String[compressedFileString.length()];
 		stringIndex = 0;
-		compressedString = compressedFileString;
 	}
 	
-	public String decode(){
-		for(int i = 0; i < stringArraySize; i++){
-			compressedFileStringArray[i] = String.valueOf(compressedString.charAt(i));
+	public String decode(String compressedFileString){
+		for(int i = 0; i < compressedFileString.length(); i++){
+			compressedFileStringArray[i] = String.valueOf(compressedFileString.charAt(i));
 		}
 
-		for(int j = 0; j < stringArraySize; j++){
+		for(int j = 0; j < compressedFileString.length(); j++){
 			tempSortingArray = compressedFileStringArray;
 			Arrays.sort(tempSortingArray);
-			for(int k = 0; k < stringArraySize; k++){
+			for(int k = 0; k < compressedFileString.length(); k++){
 				compressedFileStringArray[k] = compressedFileStringArray[k] + tempSortingArray[k].charAt(stringArraySize-1);
 			}
 		}
