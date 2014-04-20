@@ -10,7 +10,7 @@ import java.util.TreeMap;
 
 import compression.util.arithmetic.CharMap;
 
-class ArithmeticCoder implements Coder
+public class ArithmeticCoder implements Coder
 {
     @Override
     public byte [] encode ( String message )
