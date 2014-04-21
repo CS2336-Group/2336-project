@@ -5,6 +5,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
+import java.util.Arrays;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -82,10 +83,11 @@ public class ArithmeticCoder implements Coder
             if ( !value.testBit ( i ) )
             {
                 value = value.setBit ( i );
-                while ( ( j = value.getLowestSetBit() ) < i )
-                {
-                    value = value.clearBit ( j );
-                }
+                byte[] comparatorBytes = value.toByteArray();
+                Arrays.fill ( comparatorBytes, ( byte ) 0xFF );
+                BigInteger comparator = new BigInteger ( comparatorBytes );
+                comparator = comparator.shiftLeft ( i );
+                value = value.and ( comparator );
                 break;
             }
         }
