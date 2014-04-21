@@ -9,21 +9,21 @@ public class SummaryWindow extends JFrame
 {
     private String algorithm;
     private Integer time;
-    private File inputFile;
-    private File outputFile;
+    private File textFile;
+    private File compressedFile;
 
     private JPanel panel;
 
     public SummaryWindow (
         String algorithm,
         Integer time,
-        File inputFile,
-        File outputFile )
+        File textFile,
+        File compressedFile )
     {
         this.algorithm = algorithm;
         this.time = time;
-        this.inputFile = inputFile;
-        this.outputFile = outputFile;
+        this.textFile = textFile;
+        this.compressedFile = compressedFile;
 
         panel = new JPanel();
         panel.setLayout ( new BoxLayout ( panel, BoxLayout.Y_AXIS ) );
@@ -33,12 +33,12 @@ public class SummaryWindow extends JFrame
         panel.add ( Box.createRigidArea ( new Dimension ( 0, 24 ) ) );
         panel.add ( new JLabel ( "Time in Milliseconds: " + time ) );
         panel.add ( Box.createRigidArea ( new Dimension ( 0, 24 ) ) );
-        panel.add ( new JLabel ( "Input File Size: " + inputFile.length() ) );
+        panel.add ( new JLabel ( "Text File Size: " + textFile.length() ) );
         panel.add ( Box.createRigidArea ( new Dimension ( 0, 24 ) ) );
-        panel.add ( new JLabel ( "Output File Size: " + outputFile.length() ) );
+        panel.add ( new JLabel ( "Compressed File Size: " + compressedFile.length() ) );
         panel.add ( Box.createRigidArea ( new Dimension ( 0, 24 ) ) );
         panel.add ( new JLabel ( "Compression Rate (btc): " +
-            ( ( double ) outputFile.length() / ( double ) inputFile.length() ) * 8
+            ( ( double ) compressedFile.length() / ( double ) textFile.length() ) * 8
         ) );
 
         add ( panel );
