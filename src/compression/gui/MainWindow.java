@@ -156,7 +156,7 @@ public class MainWindow extends JFrame
                 }
 
                 byte[] output = coder.encode ( message );
-            } else
+            } else // Decompress
             {
                 byte[] codedMessage = FileReader.readBinary ( filename );
 
