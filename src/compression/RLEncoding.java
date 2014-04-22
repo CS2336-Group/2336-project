@@ -1,48 +1,61 @@
-public class RLEncoding implements Coder{
-	private String originalString = "";
-	private String compressedString = "";
+package compression;
 
+import java.io.*;
+
+public class RLEncoding implements Coder{
 	public byte[] encode(String message){
 		int msgLength = message.length();
-		int msgIndex = 0;
-		int charCount = 0;
-		char prevChar = '';
-		byte[] compressedBytesOfString = new byte[msgLength];
+		int msgIndex = 1;
+		int charCount = 1;
+		char prevChar = message.charAt(0);
+		ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+		DataOutputStream byteCompressed = new DataOutputStream(byteArrayOutputStream);
 
-		while(msgIndex < msgLength){
-			if(message[msgIndex] != prevChar){
-				if(charCount > 1) compressedString += charCount;
+		try{
+			while(msgIndex < msgLength){
+				if(message.charAt(msgIndex) != prevChar){
+					byteCompressed.writeInt(charCount);
 				
-				compressedString += message[msgIndex];
-				prevChar = message[msgIndex];
+					byteCompressed.writeChar(prevChar);
+					prevChar = message.charAt(msgIndex);
 				
-				charCount = 0;
-			}
+					charCount = 0;
+				}
 			
-			msgIndex++;
-			charCount++;
+				msgIndex++;
+				charCount++;
+			}
+
+			byteCompressed.writeInt(charCount);
+			byteCompressed.writeChar(message.charAt(msgIndex - 1));
+		}
+		catch(IOException ex){
+			System.out.println("Exception occurred.");
 		}
 
-		compressedBytesOfString = compressedString.getBytes();
-
-		return compressedBytesOfString;
+		return byteArrayOutputStream.toByteArray();
 	}
 
-	public String decode(byte[] codedMessage){
-		String result;
+	public String decode(byte[] codedMessage) {
+		String result = "";
+		ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(codedMessage);
+		DataInputStream byteInputStream = new DataInputStream(byteArrayInputStream);
 
-		for(int i = 0; i < codedMessage.length; ++i) {
-			int count = 0;
-			while(codedMessage[i] >= '0' && codedMessage[i] <= '9') {
-				count = count * 10 + codedMessage[i] - '0';
-				++i;
+		try{
+			while(true) {
+				int count = byteInputStream.readInt();
+				char current = byteInputStream.readChar(); 
+
+				for(int i = 0; i < count; i++) {
+					result += current;
+				}
 			}
-
-			char current = codedMessage[i];
-
-			for(int j = 0; j < count; ++j) {
-				result += current;
-			}
+		}
+		catch(EOFException ex){
+			System.out.println("EOF Exception occurred.");
+		}
+		catch(IOException ioEx){
+			System.out.println("IO Exception present.");
 		}
 
 		return result;
