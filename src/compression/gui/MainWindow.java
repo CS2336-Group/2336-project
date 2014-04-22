@@ -7,6 +7,7 @@ import java.awt.event.*;
 
 import compression.*;
 import compression.util.FileReader;
+import compression.util.FileWriter;
 
 public class MainWindow extends JFrame
 {
@@ -106,6 +107,8 @@ public class MainWindow extends JFrame
             actionButton = new JButton ( "Compress/Decompress" );
             quitButton = new JButton ( "Quit" );
             quitButton.setPreferredSize ( actionButton.getPreferredSize() );
+
+            actionButton.addActionListener ( new CompressionPress() );
             
             add ( Box.createHorizontalGlue() );
             add ( actionButton );
@@ -123,7 +126,11 @@ public class MainWindow extends JFrame
             Coder coder = compressionPanel.getCoder();
             String coderName = compressionPanel.getCoderName();
             String filename = filePanel.getFilename();
+            String compressedFilename = "";
+            String textFilename = "";
+            String outputFilename = "";
             Component frame = ( Component ) e.getSource();
+            byte[] output;
 
             Object[] options = { "Compress", "Decompress" };
             int choice = JOptionPane.showOptionDialog (
@@ -139,7 +146,14 @@ public class MainWindow extends JFrame
 
             if ( options[ choice ] == "Compress" )
             {
-                String message = FileReader.readFile ( filename );
+                textFilename = filename;
+                compressedFilename = textFilename.replaceFirst ( "\\.txt$", "" );
+                compressedFilename =
+                    compressedFilename.replaceFirst ( "$", ".emi" );
+                outputFilename = compressedFilename;
+
+                String message = FileReader.readFile ( textFilename );
+                //System.out.println ( message );
 
                 if ( message == null )
                 {
@@ -155,10 +169,16 @@ public class MainWindow extends JFrame
                     return;
                 }
 
-                byte[] output = coder.encode ( message );
+                output = coder.encode ( message );
             } else // Decompress
             {
-                byte[] codedMessage = FileReader.readBinary ( filename );
+                compressedFilename = filename;
+                textFilename = compressedFilename.replaceFirst ( "\\.emi$", "" );
+                textFilename = textFilename.replaceFirst ( "$", ".txt" );
+                outputFilename = textFilename;
+
+                byte[] codedMessage =
+                    FileReader.readBinary ( compressedFilename );
 
                 if ( codedMessage == null )
                 {
@@ -169,8 +189,10 @@ public class MainWindow extends JFrame
                 }
 
                 String outputString = coder.decode ( codedMessage );
-                byte[] output = outputString.getBytes();
+                output = outputString.getBytes();
             }
+
+            FileWriter.writeToFile ( outputFilename, output );
         }
     }
 }
