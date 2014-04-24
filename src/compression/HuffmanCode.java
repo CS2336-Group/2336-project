@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.PriorityQueue;
+import java.math.BigInteger;
 
 
 public class HuffmanCode implements Coder {
@@ -123,7 +124,7 @@ public class HuffmanCode implements Coder {
         String compressed = compress(text);
         System.out.println("The compressed used a total of " + compressed.length() + " bits");
         System.out.println("code message=\t"+compressed);
-        return compressed.getBytes();
+        return new BigInteger(compressed, 2).toByteArray();
     }
     //decode mothod
     /*
@@ -135,8 +136,9 @@ public class HuffmanCode implements Coder {
     @Override
     public String decode(byte[] codedMessage) {
 
+        BigInteger messageNum = new BigInteger ( codedMessage );
         String decompressed = "";
-        decompressed = decompress(new String(codedMessage));
+        decompressed = decompress(messageNum.toString(2));
 
         System.out.println("The original text used a total of " + decompressed.length() + " characters");
         System.out.println(decompressed);
