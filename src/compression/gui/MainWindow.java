@@ -133,6 +133,13 @@ public class MainWindow extends JFrame
             Component frame = ( Component ) e.getSource();
             byte[] output;
 
+            File inputFile = new File ( filename );
+            if ( !inputFile.exists() )
+            {
+                JOptionPane.showMessageDialog ( frame, "No such file found." );
+                return;
+            }
+
             long startTime, compressionTime;
 
             Object[] options = { "Compress", "Decompress" };
