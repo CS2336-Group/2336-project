@@ -132,6 +132,8 @@ public class MainWindow extends JFrame
             Component frame = ( Component ) e.getSource();
             byte[] output;
 
+            long startTime, compressionTime;
+
             Object[] options = { "Compress", "Decompress" };
             int choice = JOptionPane.showOptionDialog (
                 frame,
@@ -168,7 +170,9 @@ public class MainWindow extends JFrame
                     return;
                 }
 
+                startTime = System.currentTimeMillis();
                 output = coder.encode ( message );
+                compressionTime = System.currentTimeMillis() - startTime;
             } else // Decompress
             {
                 compressedFilename = filename;
@@ -187,7 +191,10 @@ public class MainWindow extends JFrame
                     return;
                 }
 
+                startTime = System.currentTimeMillis();
                 String outputString = coder.decode ( codedMessage );
+                compressionTime = System.currentTimeMillis() - startTime;
+
                 output = outputString.getBytes();
             }
 
