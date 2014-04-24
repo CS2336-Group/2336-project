@@ -1,6 +1,6 @@
 package compression;
 
-public class TestHuffaman {
+public class TestHuffman {
 
 	public static void main(String[] args) {
 		HuffmanCode h=new HuffmanCode();
