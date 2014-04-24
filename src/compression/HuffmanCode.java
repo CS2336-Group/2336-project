@@ -8,6 +8,7 @@ import java.io.DataOutputStream;
 import java.io.DataInputStream;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.PriorityQueue;
 import java.math.BigInteger;
 
@@ -123,20 +124,62 @@ public class HuffmanCode implements Coder {
         ByteArrayOutputStream outputBytes = new ByteArrayOutputStream();
         DataOutputStream output = new  DataOutputStream ( outputBytes );
 
+        try
+        {
+            output.writeInt ( d.size() );
+            for ( Map.Entry<Character, Integer> e : d.entrySet() )
+            {
+                output.writeChar ( e.getKey() );
+                output.writeInt ( e.getValue() );
+            }
+            output.write ( compressedBytes.toByteArray() );
+        } catch ( java.io.IOException e )
+        {
+            System.err.println ( "There was an IOException." );
+            return null;
+        }
+
         System.out.println("The compressed used a total of " + compressed.length() + " bits");
         System.out.println("code message=\t"+compressed);
-        return compressedBytes.toByteArray();
+        return outputBytes.toByteArray();
     }
     //decode mothod
     @Override
     public String decode(byte[] codedMessage) {
 
         String decompressed = "";
+        BigInteger messageNum;
+        int keyLength = 0;
 
-        ByteArrayInputStream inputBytes = new ByteArrayInputStream ( codedMessage );
+        ByteArrayInputStream inputBytes = new ByteArrayInputStream (
+            codedMessage
+        );
         DataInputStream input = new DataInputStream ( inputBytes );
 
-        BigInteger messageNum = new BigInteger ( codedMessage );
+        q = new PriorityQueue<Node>(100, new FrequencyComparator());
+
+        try
+        {
+            keyLength = input.readInt();
+            for ( int i = 0; i < keyLength; ++i )
+            {
+                char readChar = input.readChar();
+                int readFreq = input.readInt();
+                q.add ( new Node ( readChar, readFreq ) );
+            }
+            
+            byte[] valueStorage = new byte[ inputBytes.available() ];
+            input.readFully ( valueStorage );
+            messageNum = new BigInteger ( valueStorage );
+        } catch ( java.io.IOException e )
+        {
+            System.err.println ( "There was an IOException" );
+            return null;
+        }
+
+        Node root = huffman(keyLength);
+
+        buildTable(root);
 
         decompressed = decompress(messageNum.toString(2));
 
