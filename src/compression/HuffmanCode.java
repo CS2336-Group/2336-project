@@ -5,7 +5,7 @@ import java.io.PrintWriter;
 import java.io.ByteArrayOutputStream;
 import java.io.ByteArrayInputStream;
 import java.io.DataOutputStream;
-import java.io.DataOutputStream;
+import java.io.DataInputStream;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.PriorityQueue;
