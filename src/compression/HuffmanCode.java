@@ -91,7 +91,7 @@ public class HuffmanCode implements Coder {
     }
     //encode method
     @Override
-    public byte[] encode( String text ) {
+    public byte[] encode(String text) {
         HashMap<Character, Integer> d = new HashMap<Character, Integer>();
         for(int i = 0; i < text.length(); i++) {
             char a = text.charAt(i);
