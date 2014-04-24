@@ -73,6 +73,7 @@ public class MainWindow extends JFrame
             compressionMap = new HashMap<String, Coder>();
 
             compressionMap.put ( "Arithmetic Coding", new ArithmeticCoder() );
+            compressionMap.put ( "Huffman Coding", new HuffmanCode() );
 
             compressionBox = new JComboBox<String>();
             for ( String s : compressionMap.keySet() )
