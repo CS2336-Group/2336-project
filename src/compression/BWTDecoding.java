@@ -11,6 +11,7 @@ public class BWTDecoding{
 	
 	public BWTDecoding(String compressedFileString){
 		stringArraySize = compressedFileString.length();
+		System.out.println("Hello!");
 		compressedFileStringArray = new String[compressedFileString.length()];
 		stringIndex = 0;
 		compressedString = compressedFileString;
