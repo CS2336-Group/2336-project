@@ -17,10 +17,6 @@ public class HuffmanCode implements Coder {
     public static HashMap<Character, String> toCode;
     public static HashMap<String, Character> toChar;
 
-    HuffmanCode(){
-
-    }
-
     // This method builds the tree based on the frequency of every characters
     public  Node huffman(int n) {
         Node x, y;
