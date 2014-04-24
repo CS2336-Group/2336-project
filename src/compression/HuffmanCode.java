@@ -81,10 +81,6 @@ public class HuffmanCode implements Coder {
 
         return result;
     }
-    /*since we are testing our codes with simple string this method 
-     * is not important now, but at the end
-     * 
-     * */
     public  void saveToFile(String s) throws FileNotFoundException {
         PrintWriter oFile = new PrintWriter("file.txt");
 
@@ -93,10 +89,7 @@ public class HuffmanCode implements Coder {
         oFile.println(s);
         oFile.close();
     }
-    /*encode method
-     * i just found it to be easy,to let encode method to has no arguement
-     * if you think it is better the other way let me know please
-     */
+    //encode method
     @Override
     public byte[] encode( String text ) {
         HashMap<Character, Integer> d = new HashMap<Character, Integer>();
@@ -127,12 +120,6 @@ public class HuffmanCode implements Coder {
         return new BigInteger(compressed, 2).toByteArray();
     }
     //decode mothod
-    /*
-     * 
-     * this is where am having problem,parameter for decompress.
-     * i thought it takes the compressed string value,which the encode method returns.
-     * but am not getting it right,please help
-     * **/
     @Override
     public String decode(byte[] codedMessage) {
 
