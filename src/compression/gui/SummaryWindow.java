@@ -8,7 +8,7 @@ import java.awt.*;
 public class SummaryWindow extends JFrame
 {
     private String algorithm;
-    private Integer time;
+    private Long time;
     private File textFile;
     private File compressedFile;
 
@@ -16,7 +16,7 @@ public class SummaryWindow extends JFrame
 
     public SummaryWindow (
         String algorithm,
-        Integer time,
+        Long time,
         File textFile,
         File compressedFile )
     {
