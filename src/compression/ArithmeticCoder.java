@@ -52,7 +52,7 @@ public class ArithmeticCoder implements Coder
         int zeroes = value.getLowestSetBit();
         value = value.shiftRight ( zeroes );
 
-        // Output the resulting number.
+        // Output the resulting number to a byte array.
         ByteArrayOutputStream outputBytes = new ByteArrayOutputStream();
         DataOutputStream output = new DataOutputStream ( outputBytes );
         try
@@ -71,22 +71,35 @@ public class ArithmeticCoder implements Coder
             return null;
         }
 
+        // Return the output bytes.
         return outputBytes.toByteArray();
     }
 
+    // Find the number in between the high and the low value with the most
+    // zeroes.
     private BigInteger maxZeroes ( BigInteger value, BigInteger highValue )
     {
+        // Find the highest bit that would be possible to add one to before
+        // going over the high value.
         int i = highValue.xor ( value ).bitLength();
         int j;
         while ( --i >= 0 )
         {
+            // If you hit a zero bit...
             if ( !value.testBit ( i ) )
             {
+                // ...change that bit to a 1.
                 value = value.setBit ( i );
+
+                // Create a bit mask to compare with.
                 byte[] comparatorBytes = value.toByteArray();
                 Arrays.fill ( comparatorBytes, ( byte ) 0xFF );
                 BigInteger comparator = new BigInteger ( comparatorBytes );
                 comparator = comparator.shiftLeft ( i );
+
+                // And the value with the bit mask. Everything after the changed
+                // bit will be cleared en masse. Way faster than clearing bits
+                // individually.
                 value = value.and ( comparator );
                 break;
             }
