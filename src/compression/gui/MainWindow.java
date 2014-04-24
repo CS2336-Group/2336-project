@@ -110,6 +110,7 @@ public class MainWindow extends JFrame
             quitButton.setPreferredSize ( actionButton.getPreferredSize() );
 
             actionButton.addActionListener ( new CompressionPress() );
+            quitButton.addActionListener ( new QuitPress() );
             
             add ( Box.createHorizontalGlue() );
             add ( actionButton );
@@ -211,6 +212,15 @@ public class MainWindow extends JFrame
             new SummaryWindow ( coderName, compressionTime,
                 new File ( textFilename ), new File ( compressedFilename )
             );
+        }
+    }
+
+    private class QuitPress implements ActionListener
+    {
+        @Override
+        public void actionPerformed ( ActionEvent e )
+        {
+            System.exit ( 0 );
         }
     }
 }
