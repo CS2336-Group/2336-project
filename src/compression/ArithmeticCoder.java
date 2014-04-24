@@ -76,7 +76,7 @@ public class ArithmeticCoder implements Coder
 
     private BigInteger maxZeroes ( BigInteger value, BigInteger highValue )
     {
-        int i = highValue.subtract ( value ).bitLength();
+        int i = highValue.xor ( value ).bitLength();
         int j;
         while ( --i >= 0 )
         {
