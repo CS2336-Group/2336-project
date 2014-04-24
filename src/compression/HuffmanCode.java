@@ -2,11 +2,14 @@ package compression;
 
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+import java.io.ByteArrayOutputStream;
+import java.io.ByteArrayInputStream;
+import java.io.DataOutputStream;
+import java.io.DataOutputStream;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.PriorityQueue;
 import java.math.BigInteger;
-
 
 public class HuffmanCode implements Coder {
     public static PriorityQueue<Node> q;
@@ -115,16 +118,26 @@ public class HuffmanCode implements Coder {
         buildTable(root);
 
         String compressed = compress(text);
+        BigInteger compressedBytes = new BigInteger(compressed, 2);
+
+        ByteArrayOutputStream outputBytes = new ByteArrayOutputStream();
+        DataOutputStream output = new  DataOutputStream ( outputBytes );
+
         System.out.println("The compressed used a total of " + compressed.length() + " bits");
         System.out.println("code message=\t"+compressed);
-        return new BigInteger(compressed, 2).toByteArray();
+        return compressedBytes.toByteArray();
     }
     //decode mothod
     @Override
     public String decode(byte[] codedMessage) {
 
-        BigInteger messageNum = new BigInteger ( codedMessage );
         String decompressed = "";
+
+        ByteArrayInputStream inputBytes = new ByteArrayInputStream ( codedMessage );
+        DataInputStream input = new DataInputStream ( inputBytes );
+
+        BigInteger messageNum = new BigInteger ( codedMessage );
+
         decompressed = decompress(messageNum.toString(2));
 
         System.out.println("The original text used a total of " + decompressed.length() + " characters");
