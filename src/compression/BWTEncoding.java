@@ -34,7 +34,7 @@ public class BWTEncoding{
 	}
 
 	private void compressString(){
-		for(int j = 0; j < (rotationsOfText.length)-1; j++){
+		for(int j = 0; j < rotationsOfText.length; j++){
             System.out.println ( "Starting iteration " + j );
 			compressedString += rotationsOfText[j].charAt(stringArraySize - 1);
             System.out.println ( "Ending iteration " + j );
