@@ -153,7 +153,6 @@ public class MainWindow extends JFrame
                 outputFilename = compressedFilename;
 
                 String message = FileReader.readFile ( textFilename );
-                //System.out.println ( message );
 
                 if ( message == null )
                 {
