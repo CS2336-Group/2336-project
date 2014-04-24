@@ -8,6 +8,7 @@ import java.awt.event.*;
 import compression.*;
 import compression.util.FileReader;
 import compression.util.FileWriter;
+import java.io.File;
 
 public class MainWindow extends JFrame
 {
@@ -199,6 +200,10 @@ public class MainWindow extends JFrame
             }
 
             FileWriter.writeToFile ( outputFilename, output );
+
+            new SummaryWindow ( coderName, compressionTime,
+                new File ( textFilename ), new File ( compressedFilename )
+            );
         }
     }
 }
