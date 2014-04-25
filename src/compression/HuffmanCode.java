@@ -49,7 +49,6 @@ public class HuffmanCode implements Coder {
 
         // Visit only nodes with keys
         if(n.kar != '\0') {
-            System.out.println("\'" + n.kar + "\' -> " + s);
             toCode.put(n.kar, s);
             toChar.put(s, n.kar);
         }
@@ -135,8 +134,6 @@ public class HuffmanCode implements Coder {
             return null;
         }
 
-        System.out.println("The compressed used a total of " + compressed.length() + " bits");
-        System.out.println("code message=\t"+compressed);
         return outputBytes.toByteArray();
     }
     //decode mothod
@@ -179,8 +176,6 @@ public class HuffmanCode implements Coder {
 
         decompressed = decompress(messageNum.toString(2));
 
-        System.out.println("The original text used a total of " + decompressed.length() + " characters");
-        System.out.println(decompressed);
         return decompressed;
     }
 
