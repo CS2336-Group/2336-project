@@ -11,8 +11,18 @@ import java.util.TreeMap;
 
 import compression.util.arithmetic.CharMap;
 
+/**
+ * Holds methods to encode and decode a string using the arithmetic encoding
+ * algorithm.
+ * @author Eric Dilmore (geppettodivacin)
+ */
 public class ArithmeticCoder implements Coder
 {
+    /** 
+     * Encodes a string using arithmetic encoding.
+     * @param message   the message to encode
+     * @return          the encoded value as a byte array
+     */
     @Override
     public byte [] encode ( String message )
     {
@@ -75,8 +85,14 @@ public class ArithmeticCoder implements Coder
         return outputBytes.toByteArray();
     }
 
-    // Find the number in between the high and the low value with the most
-    // zeroes.
+    /**
+     * Find the number in between the high and the low value with the most
+     * zeroes.
+     * @param value     the lower bound for the number
+     * @param highValue the upper bound for the nubmer
+     * @return          the value for the number with the most zeroes between
+     *                  the two bounds
+     */
     private BigInteger maxZeroes ( BigInteger value, BigInteger highValue )
     {
         // Find the highest bit that would be possible to add one to before
@@ -107,6 +123,12 @@ public class ArithmeticCoder implements Coder
         return value;
     }
 
+    /**
+     * Decodes a byte array generated with the arithmetic encoding compression
+     * algorithm into clear text.
+     * @param codedMessage  the message to decode
+     * @return              the clear, decoded message
+     */
     @Override
     public String decode ( byte [] codedMessage )
     {
@@ -202,7 +224,11 @@ public class ArithmeticCoder implements Coder
         return message;
     }
 
-    // Make the key based on the frequency of appearing numbers.
+    /**
+     * Make the key based on the frequency of appearing numbers.
+     * @param message   the message to create a key for
+     * @return          a CharMap that acts as a coding key for the algorithm
+     */
     CharMap makeKey ( String message )
     {
         CharMap key = new CharMap();
