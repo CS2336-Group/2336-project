@@ -5,6 +5,8 @@ import java.io.*;
 public class RLEncoding implements Coder{
 	public byte[] encode(String message){
 		int msgLength = message.length();
+		BWTEncoding bwte = new BWTEncoding(message);
+		String bwtMessage = bwte.encode();
 		int msgIndex = 1;
 		int charCount = 1;
 		char prevChar = message.charAt(0);
@@ -13,11 +15,12 @@ public class RLEncoding implements Coder{
 
 		try{
 			while(msgIndex < msgLength){
-				if(message.charAt(msgIndex) != prevChar){
+				if(bwtMessage.charAt(msgIndex) != prevChar){
 					byteCompressed.writeInt(charCount);
-				
+					//System.out.print(charCount);
+					//System.out.println(prevChar);
 					byteCompressed.writeChar(prevChar);
-					prevChar = message.charAt(msgIndex);
+					prevChar = bwtMessage.charAt(msgIndex);
 				
 					charCount = 0;
 				}
@@ -26,18 +29,23 @@ public class RLEncoding implements Coder{
 				charCount++;
 			}
 
-			byteCompressed.writeInt(charCount);
+			byteCompressed.writeInt(charCount+1);
+			//System.out.print(charCount);
+			//System.out.println(message.charAt(msgIndex - 1));
 			byteCompressed.writeChar(message.charAt(msgIndex - 1));
 		}
 		catch(IOException ex){
 			System.out.println("Exception occurred.");
 		}
+		
+		//System.out.println(bwtMessage);
 
 		return byteArrayOutputStream.toByteArray();
 	}
 
 	public String decode(byte[] codedMessage) {
 		String result = "";
+		BWTDecoding bwtd;
 		ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(codedMessage);
 		DataInputStream byteInputStream = new DataInputStream(byteArrayInputStream);
 
@@ -48,16 +56,20 @@ public class RLEncoding implements Coder{
 
 				for(int i = 0; i < count; i++) {
 					result += current;
+					//System.out.println(result);
 				}
 			}
 		}
 		catch(EOFException ex){
-			System.out.println("EOF Exception occurred.");
 		}
 		catch(IOException ioEx){
 			System.out.println("IO Exception present.");
 		}
+		
+		//System.out.println("\n" + result + "\n");
 
-		return result;
+		bwtd = new BWTDecoding(result);
+		
+		return bwtd.decode();
 	}
 }
