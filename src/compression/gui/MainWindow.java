@@ -152,6 +152,7 @@ public class MainWindow extends JFrame
                 JOptionPane.showMessageDialog ( frame, "That file is a " +
                     "directory."
                 );
+                return;
             }
 
             long startTime, compressionTime;
