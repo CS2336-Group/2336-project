@@ -124,6 +124,7 @@ public class ArithmeticCoder implements Coder
         CharMap key = new CharMap();
         TreeMap<Integer, Character> reverseKey = new TreeMap<Integer, Character>();
 
+        // Read in the key and the coded message from the byte array.
         try
         {
             int keyLength = input.readInt();
@@ -142,19 +143,25 @@ public class ArithmeticCoder implements Coder
             return null;
         }
 
+        // Use the zeroes count to recreate the full encoded value.
         code = code.shiftLeft ( zeroes );
 
+        // Create a reverse key for decoding purposes.
         for ( Character c : key.keySet() )
         {
             reverseKey.put ( key.getPosition ( c ), c );
         }
 
+        // Get the total length of the original message as the number of
+        // characters.
         int messageLength = 0;
         for ( Integer j : key.values() )
         {
             messageLength += j;
         }
 
+        // Implement Wikipedia's decoding algorithm. I wish I knew exactly why
+        // it worked, but I don't. But it works.
         power = BigInteger.valueOf ( messageLength ).pow ( messageLength - 1 );
 
         for ( ;
@@ -191,9 +198,11 @@ public class ArithmeticCoder implements Coder
             message += c;
         }
 
+        // Return the decoded message.
         return message;
     }
 
+    // Make the key based on the frequency of appearing numbers.
     CharMap makeKey ( String message )
     {
         CharMap key = new CharMap();
