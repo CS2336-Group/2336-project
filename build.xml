@@ -3,12 +3,16 @@
 		<javac includeantruntime="false"/>
 	</presetdef>
 
-	<target name="buildrun" depends="build">
+	<target name="buildrun" depends="build, run">
 	</target>
 
 	<target name="build">
 		<mkdir dir="target"/>
 		<javac srcdir="src" destdir="target" debug="true"/>
+	</target>
+
+	<target name="run">
+		<java dir="target" classpath="target" classname="compression.CompressionGUI" fork="true"/>
 	</target>
 
 	<target name="clean">
