@@ -9,6 +9,7 @@ import java.util.TreeSet;
 
 /**
  * Stores the probability of each character of the message.
+ * @author Eric Dilmore (geppettodivacin)
  */
 public class CharMap extends HashMap<Character, Integer> implements java.io.Serializable
 {
@@ -19,6 +20,8 @@ public class CharMap extends HashMap<Character, Integer> implements java.io.Seri
 
     /**
      * Adds one to the probability of seeing the character.
+     * @param c     the character to add to the probability
+     * @return      the current probability of the incremented character
      */
     public Integer addTo ( Character c )
     {
@@ -32,7 +35,10 @@ public class CharMap extends HashMap<Character, Integer> implements java.io.Seri
     }
 
     /**
-     * Get the character's probability shifted for the accumulated probability.
+     * Get the character's cumulative probability shifted for the accumulated
+     * probability.
+     * @param c     the character to get information for
+     * @return      the cumulative probability prior to this character
      */
     @Override
     public Integer get ( Object c )
@@ -40,6 +46,12 @@ public class CharMap extends HashMap<Character, Integer> implements java.io.Seri
         return getPosition ( c );
     }
 
+    /**
+     * Get the character's cumulative probability shifted for the accumulated
+     * probability.
+     * @param c     the character to get information for
+     * @return      the cumulative probability prior to this character
+     */
     public Integer getPosition ( Object c )
     {
         int sum = 0;
@@ -59,6 +71,11 @@ public class CharMap extends HashMap<Character, Integer> implements java.io.Seri
         return Integer.valueOf ( sum );
     }
 
+    /**
+     * Get the character's probability shifted for the accumulated probability.
+     * @param c     the character to get information for
+     * @return      the simple probability prior to this character
+     */
     public Integer getProbability ( Object c )
     {
         if ( !containsKey ( c ) )
@@ -68,6 +85,10 @@ public class CharMap extends HashMap<Character, Integer> implements java.io.Seri
         return super.get ( c );
     }
 
+    /**
+     * Retrieve the set of Entries from a CharMap.
+     * @return  the set of Entries
+     */
     @Override
     public Set<Map.Entry<Character, Integer>> entrySet()
     {
@@ -76,6 +97,7 @@ public class CharMap extends HashMap<Character, Integer> implements java.io.Seri
 
     /**
      * Sorts the entries by value as opposed to key.
+     * @return  a set of Entries sorted by value
      */
     private SortedSet<Map.Entry<Character, Integer>> entriesSortedByValue()
     {
