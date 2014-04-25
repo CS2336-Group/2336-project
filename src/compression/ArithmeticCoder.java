@@ -11,8 +11,18 @@ import java.util.TreeMap;
 
 import compression.util.arithmetic.CharMap;
 
+/**
+ * Holds methods to encode and decode a string using the arithmetic encoding
+ * algorithm.
+ * @author Eric Dilmore (geppettodivacin)
+ */
 public class ArithmeticCoder implements Coder
 {
+    /** 
+     * Encodes a string using arithmetic encoding.
+     * @param message   the message to encode
+     * @return          the encoded value as a byte array
+     */
     @Override
     public byte [] encode ( String message )
     {
@@ -52,7 +62,7 @@ public class ArithmeticCoder implements Coder
         int zeroes = value.getLowestSetBit();
         value = value.shiftRight ( zeroes );
 
-        // Output the resulting number.
+        // Output the resulting number to a byte array.
         ByteArrayOutputStream outputBytes = new ByteArrayOutputStream();
         DataOutputStream output = new DataOutputStream ( outputBytes );
         try
@@ -71,22 +81,41 @@ public class ArithmeticCoder implements Coder
             return null;
         }
 
+        // Return the output bytes.
         return outputBytes.toByteArray();
     }
 
+    /**
+     * Find the number in between the high and the low value with the most
+     * zeroes.
+     * @param value     the lower bound for the number
+     * @param highValue the upper bound for the nubmer
+     * @return          the value for the number with the most zeroes between
+     *                  the two bounds
+     */
     private BigInteger maxZeroes ( BigInteger value, BigInteger highValue )
     {
-        int i = highValue.subtract ( value ).bitLength();
+        // Find the highest bit that would be possible to add one to before
+        // going over the high value.
+        int i = highValue.xor ( value ).bitLength();
         int j;
         while ( --i >= 0 )
         {
+            // If you hit a zero bit...
             if ( !value.testBit ( i ) )
             {
+                // ...change that bit to a 1.
                 value = value.setBit ( i );
+
+                // Create a bit mask to compare with.
                 byte[] comparatorBytes = value.toByteArray();
                 Arrays.fill ( comparatorBytes, ( byte ) 0xFF );
                 BigInteger comparator = new BigInteger ( comparatorBytes );
                 comparator = comparator.shiftLeft ( i );
+
+                // And the value with the bit mask. Everything after the changed
+                // bit will be cleared en masse. Way faster than clearing bits
+                // individually.
                 value = value.and ( comparator );
                 break;
             }
@@ -94,6 +123,12 @@ public class ArithmeticCoder implements Coder
         return value;
     }
 
+    /**
+     * Decodes a byte array generated with the arithmetic encoding compression
+     * algorithm into clear text.
+     * @param codedMessage  the message to decode
+     * @return              the clear, decoded message
+     */
     @Override
     public String decode ( byte [] codedMessage )
     {
@@ -111,6 +146,7 @@ public class ArithmeticCoder implements Coder
         CharMap key = new CharMap();
         TreeMap<Integer, Character> reverseKey = new TreeMap<Integer, Character>();
 
+        // Read in the key and the coded message from the byte array.
         try
         {
             int keyLength = input.readInt();
@@ -129,19 +165,25 @@ public class ArithmeticCoder implements Coder
             return null;
         }
 
+        // Use the zeroes count to recreate the full encoded value.
         code = code.shiftLeft ( zeroes );
 
+        // Create a reverse key for decoding purposes.
         for ( Character c : key.keySet() )
         {
             reverseKey.put ( key.getPosition ( c ), c );
         }
 
+        // Get the total length of the original message as the number of
+        // characters.
         int messageLength = 0;
         for ( Integer j : key.values() )
         {
             messageLength += j;
         }
 
+        // Implement Wikipedia's decoding algorithm. I wish I knew exactly why
+        // it worked, but I don't. But it works.
         power = BigInteger.valueOf ( messageLength ).pow ( messageLength - 1 );
 
         for ( ;
@@ -178,9 +220,15 @@ public class ArithmeticCoder implements Coder
             message += c;
         }
 
+        // Return the decoded message.
         return message;
     }
 
+    /**
+     * Make the key based on the frequency of appearing numbers.
+     * @param message   the message to create a key for
+     * @return          a CharMap that acts as a coding key for the algorithm
+     */
     CharMap makeKey ( String message )
     {
         CharMap key = new CharMap();

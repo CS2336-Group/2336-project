@@ -10,6 +10,11 @@ import compression.util.FileReader;
 import compression.util.FileWriter;
 import java.io.File;
 
+/**
+ * The main window of the GUI. It is also responsible for keeping track of the
+ * user's actions.
+ * @author Eric Dilmore (geppettodivacin)
+ */
 public class MainWindow extends JFrame
 {
     JPanel panel;
@@ -121,6 +126,7 @@ public class MainWindow extends JFrame
         }
     }
 
+    // What happens when the user presses the "Compress/Decompress" button.
     private class CompressionPress implements ActionListener
     {
         @Override
@@ -135,16 +141,24 @@ public class MainWindow extends JFrame
             Component frame = ( Component ) e.getSource();
             byte[] output;
 
+            // Check whether the file exists and is not a directory.
             File inputFile = new File ( filename );
             if ( !inputFile.exists() )
             {
                 JOptionPane.showMessageDialog ( frame, "No such file found." );
                 return;
+            } else if ( inputFile.isDirectory() )
+            {
+                JOptionPane.showMessageDialog ( frame, "That file is a " +
+                    "directory."
+                );
+                return;
             }
 
             long startTime, compressionTime;
 
-            Object[] options = { "Compress", "Decompress" };
+            // Display a dialog box to ask the user what he wants to do.
+            Object[] options = { "Compress", "Decompress", "Cancel" };
             int choice = JOptionPane.showOptionDialog (
                 frame,
                 "What do you want to do?",
@@ -158,14 +172,17 @@ public class MainWindow extends JFrame
 
             if ( options[ choice ] == "Compress" )
             {
+                // Name the new file.
                 textFilename = filename;
                 compressedFilename = textFilename.replaceFirst ( "\\.txt$", "" );
                 compressedFilename =
                     compressedFilename.replaceFirst ( "$", ".emi" );
                 outputFilename = compressedFilename;
 
+                // Read the file.
                 String message = FileReader.readFile ( textFilename );
 
+                // Check for read errors.
                 if ( message == null )
                 {
                     JOptionPane.showMessageDialog ( frame,
@@ -180,19 +197,27 @@ public class MainWindow extends JFrame
                     return;
                 }
 
+                // Start the timer.
                 startTime = System.currentTimeMillis();
+
+                // Encode the message.
                 output = coder.encode ( message );
+
+                // End the timer.
                 compressionTime = System.currentTimeMillis() - startTime;
-            } else // Decompress
+            } else if ( options[ choice ] == "Decompress" )
             {
+                // Name the new file
                 compressedFilename = filename;
                 textFilename = compressedFilename.replaceFirst ( "\\.emi$", "" );
                 textFilename = textFilename.replaceFirst ( "$", ".txt" );
                 outputFilename = textFilename;
 
+                // Read the file.
                 byte[] codedMessage =
                     FileReader.readBinary ( compressedFilename );
 
+                // If the reader couldn't read the file...
                 if ( codedMessage == null )
                 {
                     JOptionPane.showMessageDialog ( frame,
@@ -201,21 +226,33 @@ public class MainWindow extends JFrame
                     return;
                 }
 
+                // Time the compression.
                 startTime = System.currentTimeMillis();
+
+                // Decode the message.
                 String outputString = coder.decode ( codedMessage );
+
+                // Complete the timing.
                 compressionTime = System.currentTimeMillis() - startTime;
 
+                // Convert the output string to a byteArray for generic output.
                 output = outputString.getBytes();
+            } else // if ( options[ choice ] == "Cancel" )
+            {
+                return;
             }
 
+            // Output the result to the output file.
             FileWriter.writeToFile ( outputFilename, output );
 
+            // Make a window to display summary statistics.
             new SummaryWindow ( coderName, compressionTime,
                 new File ( textFilename ), new File ( compressedFilename )
             );
         }
     }
 
+    // What happens when the user presses the "Quit" button.
     private class QuitPress implements ActionListener
     {
         @Override
