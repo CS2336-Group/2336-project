@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?><diagram program="umlet" version="11.3">
+  <zoom_level>10</zoom_level>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>0</x>
+      <y>150</y>
+      <w>390</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>FileReader
+--
+_+ readFile(path : String) : String_
+_+ readFile(path : String, encoding : Charset) : String_
+_+ readBinary(path : String) : byte[]_</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>420</x>
+      <y>150</y>
+      <w>390</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>FileWriter
+--
+_+ writeToFile(filename : String, output : byte[]) : void_
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>
