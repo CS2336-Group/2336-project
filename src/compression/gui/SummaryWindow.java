@@ -5,6 +5,10 @@ import javax.swing.*;
 import java.awt.*;
 
 
+/**
+ * A window to display statistics about the latest compression.
+ * @author Eric Dilmore (geppettodivacin)
+ */
 public class SummaryWindow extends JFrame
 {
     private String algorithm;
