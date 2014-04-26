@@ -4,12 +4,12 @@ import java.io.*;
 
 public class RLEncoding implements Coder{
 	public byte[] encode(String message){
-		int msgLength = message.length();
 		BWTEncoding bwte = new BWTEncoding(message);
 		String bwtMessage = bwte.encode();
+		int msgLength = bwtMessage.length();
 		int msgIndex = 1;
 		int charCount = 1;
-		char prevChar = message.charAt(0);
+		char prevChar = bwtMessage.charAt(0);
 		ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
 		DataOutputStream byteCompressed = new DataOutputStream(byteArrayOutputStream);
 
@@ -17,8 +17,7 @@ public class RLEncoding implements Coder{
 			while(msgIndex < msgLength){
 				if(bwtMessage.charAt(msgIndex) != prevChar){
 					byteCompressed.writeInt(charCount);
-					//System.out.print(charCount);
-					//System.out.println(prevChar);
+
 					byteCompressed.writeChar(prevChar);
 					prevChar = bwtMessage.charAt(msgIndex);
 				
@@ -29,16 +28,12 @@ public class RLEncoding implements Coder{
 				charCount++;
 			}
 
-			byteCompressed.writeInt(charCount+1);
-			//System.out.print(charCount);
-			//System.out.println(message.charAt(msgIndex - 1));
-			byteCompressed.writeChar(message.charAt(msgIndex - 1));
+			byteCompressed.writeInt(charCount);
+			byteCompressed.writeChar(bwtMessage.charAt(msgIndex - 1));
 		}
 		catch(IOException ex){
 			System.out.println("Exception occurred.");
 		}
-		
-		//System.out.println(bwtMessage);
 
 		return byteArrayOutputStream.toByteArray();
 	}
@@ -56,7 +51,6 @@ public class RLEncoding implements Coder{
 
 				for(int i = 0; i < count; i++) {
 					result += current;
-					//System.out.println(result);
 				}
 			}
 		}
@@ -66,10 +60,8 @@ public class RLEncoding implements Coder{
 			System.out.println("IO Exception present.");
 		}
 		
-		//System.out.println("\n" + result + "\n");
-
 		bwtd = new BWTDecoding(result);
 		
-		return bwtd.decode();
+		return (bwtd.decode()).substring(0,(bwtd.decode()).length()-1);
 	}
 }
