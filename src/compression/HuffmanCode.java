@@ -13,9 +13,9 @@ import java.util.PriorityQueue;
 import java.math.BigInteger;
 
 public class HuffmanCode implements Coder {
-    public static PriorityQueue<Node> q;
-    public static HashMap<Character, String> toCode;
-    public static HashMap<String, Character> toChar;
+    private PriorityQueue<Node> q;
+    private HashMap<Character, String> toCode;
+    private HashMap<String, Character> toChar;
 
     // This method builds the tree based on the frequency of every characters
     public  Node huffman(int n) {
