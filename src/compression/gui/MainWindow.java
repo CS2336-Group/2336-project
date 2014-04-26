@@ -79,6 +79,7 @@ public class MainWindow extends JFrame
 
             compressionMap.put ( "Arithmetic Coding", new ArithmeticCoder() );
             compressionMap.put ( "Huffman Coding", new HuffmanCode() );
+            compressionMap.put ( "Run Length Encoding", new RLEncoding() );
 
             compressionBox = new JComboBox<String>();
             for ( String s : compressionMap.keySet() )
