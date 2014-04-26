@@ -1,6 +1,7 @@
 #CS 2336 Project: Text File Compression
 
 ### To build and run
+#### With ant
 If you have ant installed, just run:
 
 	ant
@@ -15,12 +16,18 @@ If you would like to simply build the program without running it, run:
 If you would like to simple run the program without rebuilding it, run:
 	ant run
 
-If you do *not* have ant installed, you can compile it all with javac. If you're on Windows, build it with:
+#### Windows without ant
+Build the project with:
 
 	dir /s /B src/*.java > sources.txt
 	javac -d target @sources.txt
 
-If you're on Linux, build it with:
+Then, to run, change directories to the target directory. Then run:
+
+	java compression.CompressionGUI
+
+#### Linux without ant
+Build the project with:
 
 	find -name "*.java" >sources.txt
 	javac -d target @sources.txt
