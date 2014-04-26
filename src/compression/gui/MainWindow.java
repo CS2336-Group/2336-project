@@ -222,6 +222,9 @@ public class MainWindow extends JFrame
                     return;
                 }
 
+                // Remove all invalid UTF-8 characters.
+                message = message.replace ( Character.toString ( ( char ) 0xFFFD ), "" );
+
                 // Start the timer.
                 startTime = System.currentTimeMillis();
 
