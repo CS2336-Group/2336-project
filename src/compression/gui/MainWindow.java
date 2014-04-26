@@ -133,24 +133,48 @@ public class MainWindow extends JFrame
         @Override
         public void actionPerformed ( ActionEvent e )
         {
-            Coder coder = compressionPanel.getCoder();
-            String coderName = compressionPanel.getCoderName();
-            String filename = filePanel.getFilename();
+            Thread processThread = new Thread ( new ProcessTask (
+                compressionPanel.getCoder(),
+                compressionPanel.getCoderName(),
+                filePanel.getFilename(),
+                ( Component ) e.getSource()
+            ) );
+            processThread.start();
+        }
+    }
+
+    private class ProcessTask implements Runnable
+    {
+        private Coder coder;
+        private String coderName;
+        private String filename;
+        private Component source;
+
+        public ProcessTask ( Coder coder, String coderName, String filename, Component source )
+        {
+            this.coder = coder;
+            this.coderName = coderName;
+            this.filename = filename;
+            this.source = source;
+        }
+
+        @Override
+        public void run()
+        {
             String compressedFilename = "";
             String textFilename = "";
             String outputFilename = "";
-            Component frame = ( Component ) e.getSource();
             byte[] output;
 
             // Check whether the file exists and is not a directory.
             File inputFile = new File ( filename );
             if ( !inputFile.exists() )
             {
-                JOptionPane.showMessageDialog ( frame, "No such file found." );
+                JOptionPane.showMessageDialog ( source, "No such file found." );
                 return;
             } else if ( inputFile.isDirectory() )
             {
-                JOptionPane.showMessageDialog ( frame, "That file is a " +
+                JOptionPane.showMessageDialog ( source, "That file is a " +
                     "directory."
                 );
                 return;
@@ -161,7 +185,7 @@ public class MainWindow extends JFrame
             // Display a dialog box to ask the user what he wants to do.
             Object[] options = { "Compress", "Decompress", "Cancel" };
             int choice = JOptionPane.showOptionDialog (
-                frame,
+                source,
                 "What do you want to do?",
                 "Compress or Decompress?",
                 JOptionPane.PLAIN_MESSAGE,
@@ -186,13 +210,13 @@ public class MainWindow extends JFrame
                 // Check for read errors.
                 if ( message == null )
                 {
-                    JOptionPane.showMessageDialog ( frame,
+                    JOptionPane.showMessageDialog ( source,
                         "There is no such file."
                     );
                     return;
                 } else if ( message == "" )
                 {
-                    JOptionPane.showMessageDialog ( frame,
+                    JOptionPane.showMessageDialog ( source,
                         "The file is empty."
                     );
                     return;
@@ -221,7 +245,7 @@ public class MainWindow extends JFrame
                 // If the reader couldn't read the file...
                 if ( codedMessage == null )
                 {
-                    JOptionPane.showMessageDialog ( frame,
+                    JOptionPane.showMessageDialog ( source,
                         "The file does not exist or is empty."
                     );
                     return;
