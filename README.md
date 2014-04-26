@@ -3,8 +3,8 @@
 ## Project Summary
 Our group implemented three text file compression algorithms and made a GUI
 wrapper for them. **Arithmetic Encoding**, **Huffman Coding**, and **Run Length
-Encoding** were all used in this project. In addition, the **Burrows-Wheeler**
-Transform (while not explicitly a compression algorithm) was implemented behind
+Encoding** were all used in this project. In addition, the **Burrows-Wheeler
+Transform** (while not explicitly a compression algorithm) was implemented behind
 the scenes to assist in Run Length Encoding. Text files will be compressed to
 binary files with the extension .emi.
 
