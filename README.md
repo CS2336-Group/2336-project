@@ -59,3 +59,17 @@ Then, to run, change directories to the target directory. Then run:
 	java compression.CompressionGUI
 
 to run it.
+
+## Credits
+##### Eric Dilmore
+* System Architect
+* Arithmetic Coding
+* GUI
+
+##### Ian Brown
+* Burrows Wheeler Encoding
+* Run Length Encoding
+* Panicked Commit Messages
+
+##### Mahder Negash
+* Huffman Coding
