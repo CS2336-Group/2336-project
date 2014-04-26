@@ -1,4 +1,4 @@
-//package compression;
+package compression;
 
 public class TestBWT{
 	public static void main(String[] args){
