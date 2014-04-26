@@ -16,6 +16,13 @@ click "Encode/Decode". The program will next ask you whether you want to encode
 or decode the file. Once you select, it will process the file and display a
 summary of the process.
 
+Note that the Burrows-Wheeler Transform takes quite a long time, making Run
+Length Encoding take a long time. Each encoding and decoding takes place in its
+own thread, so the rest of the program shouldn't appear to lag. You will know
+that the processing is complete when the summary appears. Do not assume that
+there is an infinite loop if the code does not finish in a short time for long
+files.
+
 ## To build and run from source
 ### With ant
 If you have ant installed, just run:
