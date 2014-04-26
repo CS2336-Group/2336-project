@@ -4,9 +4,9 @@ import java.util.Arrays;
 
 public class BWTEncoding{
 	private String[] rotationsOfText;
-	public String rotatingString;
+	private String rotatingString;
 	private String compressedString = "";
-	public int stringArraySize;
+	private int stringArraySize;
 
 	public BWTEncoding(String originalString){
 		rotatingString = originalString+"|";
