@@ -3,7 +3,8 @@
 ## For the Grader
 This project is submitted by Eric Dilmore, Ian Brown, and Mahder Negash as the
 final project for CS2336 section 001. This file can be found in a typeset form
-at this location: https://github.com/CS2336-Group/2336-project/blob/master/README.md
+at this location:
+https://github.com/CS2336-Group/2336-project/blob/master/README.md
 
 ## Project Summary
 Our group implemented three text file compression algorithms and made a GUI
