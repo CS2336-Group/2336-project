@@ -23,6 +23,11 @@ that the processing is complete when the summary appears. Do not assume that
 there is an infinite loop if the code does not finish in a short time for long
 files.
 
+Note also that the compression algorithms will filter out any characters that
+are not valid UTF-8 characters. Unfortunately, the Java Character class can only
+handle valid UTF characters. The compression will, however, retain all other
+characters in order to preserve as much of the text files as possible.
+
 ## To build and run from source
 ### With ant
 If you have ant installed, just run:
