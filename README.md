@@ -26,8 +26,10 @@ files.
 
 Note also that the compression algorithms will filter out any characters that
 are not valid UTF-8 characters. Unfortunately, the Java Character class can only
-handle valid UTF characters. The compression will, however, retain all other
-characters in order to preserve as much of the text files as possible.
+handle valid UTF characters. If File Filtering is specified, the program will
+filter out all non-alphanumeric characters and replaces generic whitespace with
+single spaces. If File Filtering is not specified, then it will only filter out
+invalid characters.
 
 If you attempt to decode a file where an unencrypted file with the same base
 name exists, you will be prompted whether you want to overwrite or write to a
@@ -76,6 +78,7 @@ to run it.
 * System Architect
 * Arithmetic Coding
 * GUI
+* Master of Regular Expressions
 
 ##### Ian Brown
 * Burrows Wheeler Transform
