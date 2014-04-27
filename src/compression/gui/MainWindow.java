@@ -184,7 +184,7 @@ public class MainWindow extends JFrame
 
             // Display a dialog box to ask the user what he wants to do.
             Object[] options = { "Compress", "Decompress", "Cancel" };
-            int choice = JOptionPane.showOptionDialog (
+            int option = JOptionPane.showOptionDialog (
                 source,
                 "What do you want to do?",
                 "Compress or Decompress?",
@@ -195,7 +195,7 @@ public class MainWindow extends JFrame
                 options[ 0 ]
             );
 
-            if ( options[ choice ] == "Compress" )
+            if ( options[ option ] == "Compress" )
             {
                 // Name the new file.
                 textFilename = filename;
@@ -233,13 +233,61 @@ public class MainWindow extends JFrame
 
                 // End the timer.
                 compressionTime = System.currentTimeMillis() - startTime;
-            } else if ( options[ choice ] == "Decompress" )
+            } else if ( options[ option ] == "Decompress" )
             {
                 // Name the new file
                 compressedFilename = filename;
                 textFilename = compressedFilename.replaceFirst ( "\\.emi$", "" );
                 textFilename = textFilename.replaceFirst ( "$", ".txt" );
                 outputFilename = textFilename;
+
+                // Check whether the output file already exists.
+                if ( new File ( outputFilename ).exists() )
+                {
+                    String[] choices = { "Modified", "Overwrite", "Cancel" };
+                    int choice = JOptionPane.showOptionDialog (
+                        source,
+                        "The file you would output to already exists. Would you" +
+                            "like to overwrite or write to a modified filename?",
+                        "File Already Exists",
+                        JOptionPane.WARNING_MESSAGE,
+                        JOptionPane.DEFAULT_OPTION,
+                        null,
+                        choices,
+                        choices[ 0 ]
+                    );
+
+                    switch ( choices[ choice ] )
+                    {
+                        case "Modified":
+                            // Find a unique filename.
+                            int i;
+                            for (
+                                i = 1;
+                                new File ( outputFilename.replace (
+                                    ".txt", "" + i + ".txt"
+                                ) ).exists();
+                                ++i )
+                            {
+                                // Do nothing. Wait for it to find a filename that
+                                // doesn't exist.
+                            }
+
+                            // Set outputFilename to the new filename.
+                            outputFilename = outputFilename.replace (
+                                ".txt", "" + i + ".txt"
+                            );
+                            break;
+                        case "Overwrite":
+                            // Do nothing.
+                            break;
+                        case "Cancel":
+                            return;
+                        default:
+                            System.err.println ( "I don't know how you got here." );
+                            break;
+                    }
+                }
 
                 // Read the file.
                 byte[] codedMessage =
