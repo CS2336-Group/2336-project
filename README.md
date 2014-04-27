@@ -28,6 +28,11 @@ are not valid UTF-8 characters. Unfortunately, the Java Character class can only
 handle valid UTF characters. The compression will, however, retain all other
 characters in order to preserve as much of the text files as possible.
 
+If you attempt to decode a file where an unencrypted file with the same base
+name exists, you will be prompted whether you want to overwrite or write to a
+modified filename. The program will then number your unencrypted file when it is
+output.
+
 ## To build and run from source
 ### With ant
 If you have ant installed, just run:
