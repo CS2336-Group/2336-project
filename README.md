@@ -1,5 +1,10 @@
 #CS 2336 Project: Text File Compression
 
+## For the Grader
+This project is submitted by Eric Dilmore, Ian Brown, and Mahder Negash as the
+final project for CS2336 section 001. This file can be found in a typeset form
+at this location: https://github.com/CS2336-Group/2336-project/blob/master/README.md
+
 ## Project Summary
 Our group implemented three text file compression algorithms and made a GUI
 wrapper for them. **Arithmetic Encoding**, **Huffman Coding**, and **Run Length
