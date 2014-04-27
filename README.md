@@ -77,9 +77,10 @@ to run it.
 * GUI
 
 ##### Ian Brown
-* Burrows Wheeler Encoding
+* Burrows Wheeler Transform
 * Run Length Encoding
 * Panicked Commit Messages
+* Being Awesome
 
 ##### Mahder Negash
 * Huffman Coding
