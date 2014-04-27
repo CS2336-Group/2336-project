@@ -11,10 +11,11 @@ binary files with the extension .emi.
 ## Usage
 Type in the name of the file you want to process, either to encode or to decode.
 The filename can be either relative to the current directory or an absolute
-path. Select the desired encoding algorithm from the dropdown menu and then
-click "Encode/Decode". The program will next ask you whether you want to encode
-or decode the file. Once you select, it will process the file and display a
-summary of the process.
+path. Use a plain text file for compression or a compressed file for
+decompression. Select the desired encoding algorithm from the dropdown menu and
+then click "Encode/Decode". The program will next ask you whether you want to
+encode or decode the file. Once you select, it will process the file and
+display a summary of the process.
 
 Note that the Burrows-Wheeler Transform takes quite a long time, making Run
 Length Encoding take a long time. Each encoding and decoding takes place in its
