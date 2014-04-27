@@ -69,10 +69,11 @@ public class MainWindow extends JFrame
     {
         JComboBox<String> compressionBox;
         HashMap<String, Coder> compressionMap;
+        JCheckBox filterCheckbox;
 
         public CompressionPanel()
         {
-            setLayout ( new BoxLayout ( this, BoxLayout.Y_AXIS ) );
+            setLayout ( new BoxLayout ( this, BoxLayout.X_AXIS ) );
             setBorder ( BorderFactory.createEmptyBorder ( 0, 100, 0, 100 ) );
 
             compressionMap = new HashMap<String, Coder>();
@@ -90,9 +91,13 @@ public class MainWindow extends JFrame
             compressionBox.setMaximumSize ( new Dimension ( 500, 24 ) );
             compressionBox.setPreferredSize ( new Dimension ( 200, 24 ) );
 
-            add ( Box.createVerticalGlue() );
+            filterCheckbox = new JCheckBox ( "Filter textfile?", true );
+
+            add ( Box.createHorizontalGlue() );
             add ( compressionBox );
-            add ( Box.createVerticalGlue() );
+            add ( Box.createHorizontalGlue() );
+            add ( filterCheckbox );
+            add ( Box.createHorizontalGlue() );
         }
 
         public Coder getCoder()
@@ -225,6 +230,15 @@ public class MainWindow extends JFrame
                 // Remove all invalid UTF-8 characters.
                 message = message.replace ( Character.toString ( ( char ) 0xFFFD ), "" );
 
+                // Filter the file if requested.
+                if ( compressionPanel.filterCheckbox.isSelected() )
+                {
+                    message = message.replaceAll ( "[ \\t\\n]+", " " ).
+                        replaceAll ( "[^0-9A-Za-z ]", "" ).toLowerCase();
+                    textFilename = textFilename.replaceFirst ( "\\.txt$", ".filtered.txt" );
+                    FileWriter.writeToFile ( textFilename, message.getBytes() );
+                }
+
                 // Start the timer.
                 startTime = System.currentTimeMillis();
 
@@ -264,8 +278,8 @@ public class MainWindow extends JFrame
                             int i;
                             for (
                                 i = 1;
-                                new File ( outputFilename.replace (
-                                    ".txt", "" + i + ".txt"
+                                new File ( outputFilename.replaceFirst (
+                                    "\\.txt", "" + i + ".txt"
                                 ) ).exists();
                                 ++i )
                             {
@@ -274,8 +288,8 @@ public class MainWindow extends JFrame
                             }
 
                             // Set outputFilename to the new filename.
-                            outputFilename = outputFilename.replace (
-                                ".txt", "" + i + ".txt"
+                            outputFilename = outputFilename.replaceFirst (
+                                "\\.txt", "" + i + ".txt"
                             );
                             break;
                         case "Overwrite":
